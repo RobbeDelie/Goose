@@ -12,5 +12,6 @@ namespace Goose.MVC.Data.Repositories.Interfaces
         Person GetById(Guid id);
         Task UpdateAsync(Person newPerson);
         Task DeleteAsync(Guid id);
+        Task CreateAsync(Person person);
     }
 }

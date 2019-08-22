@@ -89,5 +89,23 @@ namespace Goose.MVC.Controllers
             await _personRepository.DeleteAsync(model.Id);
             return RedirectToAction("Index");
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create(PersonCreateModel model)
+        {
+            var person = new Person
+            {
+                Id = Guid.NewGuid(),
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+
+            await _personRepository.CreateAsync(person);
+            return RedirectToAction("Details", new { person.Id });
+        }
     }
 }

@@ -29,13 +29,13 @@ namespace Goose.MVC.Data.Repositories
             return person;
         }
 
-        public async Task UpdateAsync(Person newPerson)
+        public async Task UpdateAsync(Person person)
         {
-            var person = _context.Persons.Where(x => x.Id == newPerson.Id).FirstOrDefault();
-            if (person != null)
+            var result = _context.Persons.Where(x => x.Id == person.Id).FirstOrDefault();
+            if (result != null)
             {
-                person.FirstName = newPerson.FirstName;
-                person.LastName = newPerson.LastName;
+                result.FirstName = person.FirstName;
+                result.LastName = person.LastName;
                 await _context.SaveChangesAsync();
             }
         }
@@ -43,6 +43,12 @@ namespace Goose.MVC.Data.Repositories
         public async Task DeleteAsync(Guid id)
         {
             _context.Persons.Remove(_context.Persons.Where(x => x.Id == id).FirstOrDefault());
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task CreateAsync(Person person)
+        {
+            _context.Persons.Add(person);
             await _context.SaveChangesAsync();
         }
     }
