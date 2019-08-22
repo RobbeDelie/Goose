@@ -32,12 +32,18 @@ namespace Goose.MVC.Data.Repositories
         public async Task UpdateAsync(Person newPerson)
         {
             var person = _context.Persons.Where(x => x.Id == newPerson.Id).FirstOrDefault();
-            if(person != null)
+            if (person != null)
             {
                 person.FirstName = newPerson.FirstName;
                 person.LastName = newPerson.LastName;
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task DeleteAsync(Guid id)
+        {
+            _context.Persons.Remove(_context.Persons.Where(x => x.Id == id).FirstOrDefault());
+            await _context.SaveChangesAsync();
         }
     }
 }
