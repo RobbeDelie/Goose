@@ -10,5 +10,6 @@ namespace Goose.MVC.Data.Repositories.Interfaces
     {
         List<Person> GetAll();
         Person GetById(Guid id);
+        Task UpdateAsync(Person newPerson);
     }
 }

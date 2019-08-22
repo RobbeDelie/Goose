@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Goose.MVC.Data;
+using Goose.MVC.Data.Entities;
 using Goose.MVC.Data.Repositories.Interfaces;
 using Goose.MVC.Models.Person;
 using Microsoft.AspNetCore.Mvc;
@@ -46,6 +47,30 @@ namespace Goose.MVC.Controllers
                 LastName = person.LastName
             };
             return View(model);
+        }
+
+        public IActionResult Edit(Guid id)
+        {
+            var person = _personRepository.GetById(id);
+            var model = new PersonEditModel
+            {
+                Id = person.Id,
+                FirstName = person.FirstName,
+                LastName = person.LastName
+            };
+            return View(model);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(PersonEditModel model)
+        {
+            var person = new Person()
+            {
+                Id = model.Id,
+                FirstName = model.FirstName,
+                LastName = model.LastName
+            };
+            await _personRepository.UpdateAsync(person);
+            return RedirectToAction("Details",new { model.Id});
         }
     }
 }
