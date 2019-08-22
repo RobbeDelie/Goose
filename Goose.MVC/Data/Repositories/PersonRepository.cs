@@ -17,10 +17,16 @@ namespace Goose.MVC.Data.Repositories
             _Context = applicationDbContext;
         }
 
-        public List<Person> GetAllAsync()
+        public List<Person> GetAll()
         {
             var persons = _Context.Persons.ToList();
             return persons;
+        }
+
+        public Person GetById(Guid id)
+        {
+            var person = _Context.Persons.Where(x => x.Id == id).FirstOrDefault();
+            return person;
         }
     }
 }

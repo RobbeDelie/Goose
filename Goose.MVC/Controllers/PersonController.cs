@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Goose.MVC.Data;
 using Goose.MVC.Data.Repositories.Interfaces;
-using Goose.MVC.Models;
+using Goose.MVC.Models.Person;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Goose.MVC.Controllers
@@ -22,7 +22,7 @@ namespace Goose.MVC.Controllers
 
         public IActionResult Index()
         {
-            var persons = _personRepository.GetAllAsync();
+            var persons = _personRepository.GetAll();
             var model = new List<PersonListItemModel>();
             foreach (var person in persons)
             {
@@ -33,6 +33,18 @@ namespace Goose.MVC.Controllers
                 };
                 model.Add(listModel);
             }
+            return View(model);
+        }
+
+        public IActionResult Details(Guid id)
+        {
+            var person = _personRepository.GetById(id);
+            var model = new PersonDetailsModel
+            {
+                Id = person.Id,
+                FirstName = person.FirstName,
+                LastName = person.LastName
+            };
             return View(model);
         }
     }

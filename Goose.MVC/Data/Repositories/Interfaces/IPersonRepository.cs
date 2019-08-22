@@ -8,6 +8,7 @@ namespace Goose.MVC.Data.Repositories.Interfaces
 {
     public interface IPersonRepository
     {
-        List<Person> GetAllAsync();
+        List<Person> GetAll();
+        Person GetById(Guid id);
     }
 }
